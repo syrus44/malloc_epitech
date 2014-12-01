@@ -1,0 +1,21 @@
+/*
+** xsysconf.c for xsysconf in /home/bettin_j//Documents/Projets/Malloc
+** 
+** Made by jordan bettin
+** Login   <bettin_j@epitech.net>
+** 
+** Started on  Tue Jan 31 11:37:27 2012 jordan bettin
+** Last update Tue Jan 31 16:23:45 2012 jordan bettin
+*/
+
+#include "../include/malloc.h"
+
+long	xsysconf(int name)
+{
+  long	res;
+
+  res = sysconf(name);
+  if (res == -1)
+    res = 0;
+  return (res);
+}

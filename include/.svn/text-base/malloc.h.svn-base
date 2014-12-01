@@ -1,0 +1,68 @@
+/*
+** malloc.h for malloc in /home/bettin_j//Documents/Projets/Malloc
+** 
+** Made by jordan bettin
+** Login   <bettin_j@epitech.net>
+** 
+** Started on  Thu Jan 26 10:39:33 2012 jordan bettin
+** Last update Fri Feb  3 19:06:06 2012 maxime jouannin
+*/
+
+#ifndef MALLOC_H
+#define MALLOC_H
+
+/* DEFINES ET INCLUDES */
+
+#include <math.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
+/* TYPEDEFS ET STRUCTURES */
+
+typedef	struct		s_malloc
+{
+  void			*ptr;
+  unsigned long		pagesize;
+  struct s_block	*b_ptr;
+}			t_malloc;
+
+typedef struct		s_block
+{
+  size_t		size;
+  size_t		stock_taille;
+  struct s_block	*next;
+}			t_block;
+
+/* PROTOYPES FONCTIONS */
+
+void		*malloc(size_t taille);
+void		*realloc(void *ptr, size_t taille);
+void		free(void *ptr);
+void		show_alloc_mem();
+long		xsysconf(int name);
+void		*xsbrk(intptr_t i);
+void		init(intptr_t *size);
+void		init_block(size_t *taille, t_block **ret, intptr_t *sbrk_size,
+			   size_t *old_size);
+size_t		ptr_size(void *ptr);
+intptr_t	get_size_pages(size_t taille);
+t_block		*find_free_space(size_t taille);
+t_block		*add_block_space(t_block *free);
+t_block		*remove_block_space(t_block *ret);
+t_block		*find_prev(t_block *prev);
+t_block		*merge_prev_current(t_block *prev, t_block *current);
+t_block		*merge_free_memory(t_block *prev);
+t_block		*add_space(t_block *prev, t_block *free);
+
+/* GLOBALE */
+
+extern t_malloc gl_malloc;
+
+#endif /* MALLOC_H */
+

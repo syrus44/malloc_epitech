@@ -1,0 +1,44 @@
+/*
+** malloc.c for malloc in /home/bettin_j//Documents/Projets/Malloc
+** 
+** Made by jordan bettin
+** Login   <bettin_j@epitech.net>
+** 
+** Started on  Thu Jan 26 10:37:33 2012 jordan bettin
+** Last update Sat Feb  4 01:27:58 2012 maxime jouannin
+*/
+
+#include "../include/malloc.h"
+
+t_malloc gl_malloc=
+  {NULL, 0, NULL};
+
+void	*malloc(size_t taille)
+{
+  t_block	*rd;
+  t_block	*free;
+  intptr_t	sbrk_size;
+  size_t	old_size;
+
+  init(&sbrk_size);
+  if (gl_malloc.pagesize == 0 || taille <= 0
+      || taille >= pow(2, 31) || xsbrk(0) < gl_malloc.ptr)
+    return (NULL);
+  free = gl_malloc.b_ptr;
+  init_block(&taille, &rd, &sbrk_size, &old_size);
+  if (rd == NULL)
+    return (NULL);
+  rd->size = taille + sizeof(t_block);
+  old_size = old_size - rd->size;
+  if (old_size <= (sizeof(t_block)))
+    rd->size = rd->size + old_size;
+  else
+    {
+      free = (void *)rd + rd->size;
+      free->size = old_size;
+      add_block_space(free);
+    }
+  rd->next = NULL;
+  free->stock_taille = taille;
+  return ((void *)rd + (sizeof(t_block)));
+}

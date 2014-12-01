@@ -1,0 +1,29 @@
+/*
+** show_alloc_mem.c for show_alloc_mem in /home/bettin_j//Documents/Projets/Malloc
+** 
+** Made by jordan bettin
+** Login   <bettin_j@epitech.net>
+** 
+** Started on  Thu Jan 26 10:44:35 2012 jordan bettin
+** Last update Fri Feb  3 16:16:45 2012 maxime jouannin
+*/
+
+#include "../include/malloc.h"
+
+void	show_alloc_mem()
+{
+  t_block *ptr;
+
+  ptr = gl_malloc.b_ptr;
+  printf("break: %p\n", gl_malloc.ptr);
+  while (ptr != NULL)
+    {
+      if (ptr->next == NULL)
+        printf("%p - %p : %u octets\n", ptr, xsbrk(0),
+	       (unsigned int)ptr->stock_taille);
+      else
+        printf("%p - %p : %u octets\n", ptr, ptr->next,
+	       (unsigned int)ptr->stock_taille);
+      ptr = ptr->next;
+    }
+}

@@ -1,0 +1,21 @@
+/*
+** init.c for init in /home/bettin_j//Documents/Projets/Malloc
+** 
+** Made by jordan bettin
+** Login   <bettin_j@epitech.net>
+** 
+** Started on  Tue Jan 31 11:36:57 2012 jordan bettin
+** Last update Sat Feb  4 02:05:15 2012 maxime jouannin
+*/
+
+#include "../include/malloc.h"
+
+void	init(intptr_t *size)
+{
+  if (gl_malloc.pagesize == 0)
+    {
+      gl_malloc.pagesize = xsysconf(_SC_PAGESIZE);
+      gl_malloc.ptr = xsbrk(0);
+    }
+  *size = 0;
+}

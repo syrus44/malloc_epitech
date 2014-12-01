@@ -1,0 +1,32 @@
+/*
+** realloc.c for realloc in /home/bettin_j//Documents/Projets/Malloc
+** 
+** Made by jordan bettin
+** Login   <bettin_j@epitech.net>
+** 
+** Started on  Thu Jan 26 10:38:01 2012 jordan bettin
+** Last update Sat Feb  4 01:42:36 2012 maxime jouannin
+*/
+
+#include "../include/malloc.h"
+
+void		*realloc(void *ptr, size_t taille)
+{
+  void		*rd;
+  size_t	memory;
+
+  if (!taille)
+    {
+      free(ptr);
+      return (NULL);
+    }
+  memory = ptr_size(ptr);
+  if (taille <= memory)
+    return (ptr);
+  if ((rd = malloc(taille)) != NULL)
+    {
+      memcpy(rd, ptr, MIN(memory, taille));
+      free(ptr);
+    }
+  return (rd);
+}
